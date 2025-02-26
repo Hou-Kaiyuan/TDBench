@@ -80,8 +80,9 @@ def parse_requirements(fname='requirements.txt', with_version=True):
     return packages
 
 
-with open('README.md') as f:
-    readme = f.read()
+# with open('README.md') as f:
+    # readme = f.read()
+readme = ''
 
 
 def do_setup():

@@ -182,8 +182,12 @@ class LMDeployWrapper(BaseAPI):
         super().__init__(wait=wait, retry=retry, system_prompt=system_prompt, verbose=verbose, **kwargs)
 
         model_url = ''.join([api_base.split('v1')[0], 'v1/models'])
-        resp = requests.get(model_url)
-        self.model = resp.json()['data'][0]['id']
+        headers = {'Authorization': f'Bearer {self.key}'}
+        resp = requests.get(model_url, headers=headers)
+        print("API Response:", resp.text)
+        resp_json = resp.json()
+        print("JSON Response:", resp_json)
+        self.model = resp_json['data'][0]['id']
         self.logger.info(f'lmdeploy evaluate model: {self.model}')
         self.set_prompt_pattern(self.model)
         if hasattr(self, 'custom_prompt'):
