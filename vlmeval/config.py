@@ -1,3 +1,4 @@
+import os
 from vlmeval.vlm import *
 from vlmeval.api import *
 from functools import partial
@@ -15,6 +16,10 @@ PLLaVA_ROOT = None
 RBDash_ROOT = None
 VITA_ROOT = '/fs-computility/mllm1/shared/dhd/VITA'
 LLAVA_V1_7B_MODEL_PTH = 'Please set your local path to LLaVA-7B-v1.1 here, the model weight is obtained by merging LLaVA delta weight based on vicuna-7b-v1.1 in https://github.com/haotian-liu/LLaVA/blob/main/docs/MODEL_ZOO.md with vicuna-7b-v1.1. '
+
+# export LMSERVER_BASE=l.icsl.cc:23333
+assert 'LMSERVER_BASE' in os.environ and os.environ['LMSERVER_BASE'] != '', f'Please set the environment variable LMSERVER_BASE.'
+lmserver_base = os.environ['LMSERVER_BASE']
 
 video_models = {
     'Video-LLaVA-7B':partial(VideoLLaVA, model_path='LanguageBind/Video-LLaVA-7B'),
@@ -62,6 +67,7 @@ api_models = {
     'GPT4o_20240806': partial(GPT4V, model='gpt-4o-2024-08-06', temperature=0, img_size=-1, img_detail='high', retry=10, verbose=False),
     'GPT4o_20241120': partial(GPT4V, model='gpt-4o-2024-11-20', temperature=0, img_size=-1, img_detail='high', retry=10, verbose=False),
     'GPT4o_MINI': partial(GPT4V, model='gpt-4o-mini-2024-07-18', temperature=0, img_size=-1, img_detail='high', retry=10, verbose=False),
+    'GPT4o_1120_high': partial(GPT4V, model='gpt-4o-2024-11-20', temperature=0, img_size=512, img_detail='high', retry=10, verbose=False),
     # Gemini
     'GeminiPro1-0': partial(GeminiProVision, model='gemini-1.0-pro', temperature=0, retry=10),  # now GeminiPro1-0 is only supported by vertex backend
     'GeminiPro1-5': partial(GeminiProVision, model='gemini-1.5-pro', temperature=0, retry=10),
@@ -111,6 +117,29 @@ api_models = {
     'lmdeploy': partial(LMDeployAPI, api_base='http://0.0.0.0:23333/v1/chat/completions', temperature=0, retry=10),
     # Taichu-VL
     'Taichu-VL-2B': partial(TaichuVLAPI, model='Taichu-VL-2B', url='https://platform.wair.ac.cn/api/v1/infer/10381/v1/chat/completions'),
+
+    # Lambda
+    'lmdeploy-llava-v1.5-7b': partial(GPT4V, model='liuhaotian/llava-v1.5-7b', api_base=f"http://{lmserver_base}/v1/chat/completions", key="sk-ICSL123ICSL", temperature=0, retry=10, img_size=-1, img_detail='high'),
+    'lmdeploy-InternVL2_5-2B-MPO': partial(GPT4V, model='OpenGVLab/InternVL2_5-2B-MPO', api_base=f"http://{lmserver_base}/v1/chat/completions", key="sk-ICSL123ICSL", temperature=0, retry=10, img_size=-1, img_detail='high'),
+    'lmdeploy-InternVL2_5-4B-MPO': partial(GPT4V, model='OpenGVLab/InternVL2_5-4B-MPO', api_base=f"http://{lmserver_base}/v1/chat/completions", key="sk-ICSL123ICSL", temperature=0, retry=10, img_size=-1, img_detail='high'),
+    'lmdeploy-InternVL2_5-8B-MPO': partial(GPT4V, model='OpenGVLab/InternVL2_5-8B-MPO', api_base=f"http://{lmserver_base}/v1/chat/completions", key="sk-ICSL123ICSL", temperature=0, retry=10, img_size=-1, img_detail='high'),
+    'lmdeploy-InternVL2_5-4B-MPO-AWQ': partial(GPT4V, model='OpenGVLab/InternVL2_5-4B-MPO-AWQ', api_base=f"http://{lmserver_base}/v1/chat/completions", key="sk-ICSL123ICSL", temperature=0, retry=10, img_size=-1, img_detail='high'),
+    'lmdeploy-InternVL2_5-8B-MPO-AWQ': partial(GPT4V, model='OpenGVLab/InternVL2_5-8B-MPO-AWQ', api_base=f"http://{lmserver_base}/v1/chat/completions", key="sk-ICSL123ICSL", temperature=0, retry=10, img_size=-1, img_detail='high'),
+    'lmdeploy-InternVL2_5-26B-MPO-AWQ': partial(GPT4V, model='OpenGVLab/InternVL2_5-26B-MPO-AWQ', api_base=f"http://{lmserver_base}/v1/chat/completions", key="sk-ICSL123ICSL", temperature=0, retry=10, img_size=-1, img_detail='high'),
+    'lmdeploy-InternVL2_5-38B-MPO-AWQ': partial(GPT4V, model='OpenGVLab/InternVL2_5-38B-MPO-AWQ', api_base=f"http://{lmserver_base}/v1/chat/completions", key="sk-ICSL123ICSL", temperature=0, retry=10, img_size=-1, img_detail='high'),
+
+    # Qwen2.5-VL
+    'Qwen2.5-VL-3B-Instruct': partial(GPT4V, model='Qwen/Qwen2.5-VL-3B-Instruct', api_base=f"http://{lmserver_base}/v1/chat/completions", key="sk-ICSL123ICSL", temperature=0, retry=10, img_size=-1, img_detail='high'),
+    'Qwen2.5-VL-7B-Instruct': partial(GPT4V, model='Qwen/Qwen2.5-VL-7B-Instruct', api_base=f"http://{lmserver_base}/v1/chat/completions", key="sk-ICSL123ICSL", temperature=0, retry=10, img_size=-1, img_detail='high'),
+
+    # Phi-4
+    'Phi-4-multimodal-instruct': partial(GPT4V, model='microsoft/Phi-4-multimodal-instruct', api_base=f"http://{lmserver_base}/v1/chat/completions", key="sk-ICSL123ICSL", temperature=0, retry=10, img_size=-1, img_detail='high'),
+
+    # GLM
+    'glm-4v-9b': partial(GPT4V, model='THUDM/glm-4v-9b', api_base=f"http://{lmserver_base}/v1/chat/completions", key="sk-ICSL123ICSL", temperature=0, retry=10, img_size=-1, img_detail='high'),
+
+    # TogetherAI
+    # 'togetherai-llama-3.2-11b-vision-instruct-turbo': partial(GPT4V, model='meta-llama/Llama-3.2-11B-Vision-Instruct-Turbo', api_base="https://api.together.xyz/v1/chat/completions", key="X", temperature=0, retry=10, img_size=-1, img_detail='high'),
 }
 
 mmalaya_series = {

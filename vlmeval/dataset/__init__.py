@@ -13,6 +13,7 @@ from .image_vqa import (
     CustomVQADataset, CRPE, MathVerse, OlympiadBench, QSpatial, VizWiz, MMNIAH
 )
 
+from .bevbench import BEVDataset
 from .image_ccocr import CCOCRDataset
 from .text_mcq import CustomTextMCQDataset, TextMCQDataset
 
@@ -134,7 +135,7 @@ IMAGE_DATASET = [
     MMLongBench, VCRDataset, MMDUDataset, DUDE, SlideVQA, MUIRDataset, CCOCRDataset,
     GMAIMMBenchDataset, MMERealWorld, HRBenchDataset, CRPE, MathVerse, NaturalBenchDataset,
     MIABench, OlympiadBench, WildVision, MMMath, QSpatial, Dynamath, MMGenBench, VizWiz, MMNIAH,
-    CMMMU, VLRewardBench
+    CMMMU, VLRewardBench, BEVDataset
 ]
 
 VIDEO_DATASET = [
