@@ -20,7 +20,7 @@ class BEVDataset(ImageMCQDataset):
 
     @classmethod
     def supported_datasets(cls):
-        return ['bevbench', 'bevbench_zoom_in']
+        return ['bevbench', 'bevbench_zoom_in', 'bevbench_depth', 'bevbench_rotation']
 
     # Given the dataset name, return the dataset as a pandas dataframe, can override
     def load_data(self, dataset):
@@ -30,6 +30,10 @@ class BEVDataset(ImageMCQDataset):
             tsv_path = os.path.join(data_dir, 'bevbench.tsv')
         elif dataset == 'bevbench_zoom_in':
             tsv_path = os.path.join(data_dir, 'case_study_zoom_in.tsv')
+        elif dataset == 'bevbench_rotation':
+            tsv_path = os.path.join(data_dir, 'case_study_rotation.tsv')
+        elif dataset == 'bevbench_depth':
+            tsv_path = os.path.join(data_dir, 'bevbench_depth.tsv')
         assert os.path.exists(tsv_path), f'TSV file not found at {tsv_path}.'
         return load(tsv_path)
 
