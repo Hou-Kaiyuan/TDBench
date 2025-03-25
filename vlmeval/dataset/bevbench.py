@@ -10,7 +10,8 @@ class BEVDataset(ImageMCQDataset):
         'bevbench_rotation': 'case_study_rotation.tsv',
         'bevbench_depth': 'bevbench_depth.tsv',
         'bevbench_temp_cs_integrity': 'temp_cs_integrity.tsv',
-        'bevbench_object_counting': 'bevbench_object_count_v1.tsv'
+        'bevbench_object_counting': 'bevbench_object_count_v1.tsv',
+        'bevbench_temp_cs_height': 'temp_cs_height.tsv'
     }
 
     def evaluate(self, eval_file, **judge_kwargs):
