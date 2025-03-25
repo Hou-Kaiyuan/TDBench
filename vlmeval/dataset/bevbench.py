@@ -1,9 +1,18 @@
 from .image_mcq import ImageMCQDataset
 import pandas as pd
 import os
-from ..smp import load
+from ..smp import load, download_file, LMUDataRoot
 
 class BEVDataset(ImageMCQDataset):
+    dataset_filenames = {
+        'bevbench': 'bevbench.tsv',
+        'bevbench_zoom_in': 'case_study_zoom_in.tsv',
+        'bevbench_rotation': 'case_study_rotation.tsv',
+        'bevbench_depth': 'bevbench_depth.tsv',
+        'bevbench_temp_cs_integrity': 'temp_cs_integrity.tsv',
+        'bevbench_object_counting': 'bevbench_object_count_v1.tsv'
+    }
+
     def evaluate(self, eval_file, **judge_kwargs):
         """Evaluate model predictions against ground truth.
         Uses the standard MCQ evaluation from parent class.
@@ -20,22 +29,17 @@ class BEVDataset(ImageMCQDataset):
 
     @classmethod
     def supported_datasets(cls):
-        return ['bevbench', 'bevbench_zoom_in', 'bevbench_depth', 'bevbench_rotation', 'bevbench_temp_cs_integrity']
+        return cls.dataset_filenames.keys()
 
     # Given the dataset name, return the dataset as a pandas dataframe, can override
     def load_data(self, dataset):
-        # Load the TSV file from LMUData directory
-        data_dir = os.environ.get('LMUData', os.path.expanduser('~/LMUData'))
-        if dataset == 'bevbench':
-            tsv_path = os.path.join(data_dir, 'bevbench.tsv')
-        elif dataset == 'bevbench_zoom_in':
-            tsv_path = os.path.join(data_dir, 'case_study_zoom_in.tsv')
-        elif dataset == 'bevbench_rotation':
-            tsv_path = os.path.join(data_dir, 'case_study_rotation.tsv')
-        elif dataset == 'bevbench_depth':
-            tsv_path = os.path.join(data_dir, 'bevbench_depth.tsv')
-        elif dataset == 'bevbench_temp_cs_integrity':
-            tsv_path = os.path.join(data_dir, 'temp_cs_integrity.tsv')
+        filename = self.dataset_filenames[dataset]
+        data_dir = LMUDataRoot()
+        os.makedirs(data_dir, exist_ok=True)
+        url = f'http://l.icsl.cc:8500/static/img/dataset/{filename}'
+        tsv_path = os.path.join(data_dir, filename)
+        if not os.path.exists(tsv_path):
+            download_file(url, filename=tsv_path)
         assert os.path.exists(tsv_path), f'TSV file not found at {tsv_path}.'
         return load(tsv_path)
 
