@@ -123,8 +123,8 @@ api_models = {
 
     # LLaVA
     'api-llava-v1.5-7b': partial(GPT4V, model='liuhaotian/llava-v1.5-7b', api_base=f"http://{lmserver_base}/v1/chat/completions", key=lmserver_key, temperature=0, retry=10, img_size=-1, img_detail='high'),
-    'api-llava-interleave-0.5b': partial(GPT4V, model='llava-hf/llava-interleave-qwen-0.5b-hf', api_base=f"http://{lmserver_base}/v1/chat/completions", key=lmserver_key, temperature=0, retry=10, img_size=-1, img_detail='high'),
-    'api-llava-interleave-7b': partial(GPT4V, model='llava-hf/llava-interleave-qwen-7b-hf', api_base=f"http://{lmserver_base}/v1/chat/completions", key=lmserver_key, temperature=0, retry=10, img_size=-1, img_detail='high'),
+    'api-llava-interleave-qwen-0.5b-hf': partial(GPT4V, model='llava-hf/llava-interleave-qwen-0.5b-hf', api_base=f"http://{lmserver_base}/v1/chat/completions", key=lmserver_key, temperature=0, retry=10, img_size=-1, img_detail='high'),
+    'api-llava-interleave-qwen-7b-hf': partial(GPT4V, model='llava-hf/llava-interleave-qwen-7b-hf', api_base=f"http://{lmserver_base}/v1/chat/completions", key=lmserver_key, temperature=0, retry=10, img_size=-1, img_detail='high'),
 
     # InternVL 2.5
     'api-InternVL2_5-2B-MPO': partial(GPT4V, model='OpenGVLab/InternVL2_5-2B-MPO', api_base=f"http://{lmserver_base}/v1/chat/completions", key=lmserver_key, temperature=0, retry=10, img_size=-1, img_detail='high'),
