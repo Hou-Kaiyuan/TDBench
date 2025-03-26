@@ -5,13 +5,23 @@ from ..smp import load, download_file, LMUDataRoot
 
 class BEVDataset(ImageMCQDataset):
     dataset_filenames = {
-        'bevbench': 'bevbench.tsv',
-        'bevbench_zoom_in': 'case_study_zoom_in.tsv',
-        'bevbench_rotation': 'case_study_rotation.tsv',
-        'bevbench_depth': 'bevbench_depth.tsv',
-        'bevbench_temp_cs_integrity': 'temp_cs_integrity.tsv',
-        'bevbench_object_counting': 'bevbench_object_count_v1.tsv',
-        'bevbench_temp_cs_height': 'temp_cs_height.tsv'
+        # TD Bench
+        'tdbench_rot0': 'tdbench_rot0.tsv',
+        'tdbench_rot90': 'tdbench_rot90.tsv',
+        'tdbench_rot180': 'tdbench_rot180.tsv',
+        'tdbench_rot270': 'tdbench_rot270.tsv',
+
+        # Grounding
+        'tdbench_grounding_rot0': 'tdbench_grounding_rot0.tsv',
+        'tdbench_grounding_rot90': 'tdbench_grounding_rot90.tsv',
+        'tdbench_grounding_rot180': 'tdbench_grounding_rot180.tsv',
+        'tdbench_grounding_rot270': 'tdbench_grounding_rot270.tsv',
+
+        # Case Study
+        'tdbench_cs_zoom': 'case_study_zoom_in.tsv',
+        'tdbench_cs_height': 'case_study_height.tsv',
+        'tdbench_cs_integrity': 'case_study_integrity.tsv',
+        'tdbench_cs_depth': 'case_study_depth.tsv',
     }
 
     def evaluate(self, eval_file, **judge_kwargs):
