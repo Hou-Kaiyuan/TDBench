@@ -11,13 +11,7 @@ class BEVDataset(ImageMCQDataset):
         'tdbench_rot180': 'tdbench_rot180.tsv',
         'tdbench_rot270': 'tdbench_rot270.tsv',
 
-        # Grounding
-        'tdbench_grounding_rot0': 'tdbench_grounding_rot0.tsv',
-        'tdbench_grounding_rot90': 'tdbench_grounding_rot90.tsv',
-        'tdbench_grounding_rot180': 'tdbench_grounding_rot180.tsv',
-        'tdbench_grounding_rot270': 'tdbench_grounding_rot270.tsv',
-
-        # Case Study
+        # Case Study``
         'tdbench_cs_zoom': 'case_study_zoom_in.tsv',
         'tdbench_cs_height': 'case_study_height.tsv',
         'tdbench_cs_integrity': 'case_study_integrity.tsv',
@@ -53,7 +47,3 @@ class BEVDataset(ImageMCQDataset):
             download_file(url, filename=tsv_path)
         assert os.path.exists(tsv_path), f'TSV file not found at {tsv_path}.'
         return load(tsv_path)
-
-    @staticmethod
-    def dataset_type():
-        return "MCQ"
