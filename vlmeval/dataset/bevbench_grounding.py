@@ -20,9 +20,9 @@ class BEVGroundingDataset(ImageVQADataset):
         name_str = model
         result_file = eval_file.replace(f'.{suffix}', f'_{name_str}_result.pkl')
 
-        assert model == 'iou', 'Only --judge iou is supported for BEVBench Grounding'
-        if model == 'iou':
-            model = None
+        # assert model == 'iou', 'Only --judge iou is supported for BEVBench Grounding'
+        # if model == 'iou':
+        #     model = None
         
         data = load(eval_file)
         data = data.sort_values(by='index')
